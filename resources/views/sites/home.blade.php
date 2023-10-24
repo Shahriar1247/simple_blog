@@ -15,7 +15,7 @@
         <div class="row">
             <div class="col-md-8">
 
-
+<h1>Shahriar</h1>
         @foreach ($postss as $posts)
 
 
