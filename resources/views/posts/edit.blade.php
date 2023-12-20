@@ -10,6 +10,9 @@
         {!! Form::label('slug', 'Slug:')!!}
         {!! Form::text('slug', null, ['class' => 'form-control'])!!}
 
+        {!! Form::label('category_id', 'Category:', ['class' => 'form-spacing'])!!}
+        {!! Form::select('category_id', $categories, null, ['class' => 'form-control']) !!}
+
         {!! Form::label('body', 'Post Body:') !!}
         {!! Form::textarea('body', null, ['class' => 'form-control']) !!}
 

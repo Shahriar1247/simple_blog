@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\Models\Posts;
+use App\Models\Category;
+use App\Models\Tag;
+
 
 class RapidController extends Controller
 {
@@ -22,7 +25,9 @@ class RapidController extends Controller
      */
     public function create()
     {
-        return view('posts.create');
+        $categories = Category::all();
+        $tags = Tag::all();
+        return view('posts.create')->with('categories', $categories)->with('tags', $tags);
     }
 
     /**
@@ -34,6 +39,7 @@ class RapidController extends Controller
         $this->validate($request, array(
             'title' => 'required|max:225',
             'slug' => 'required|alpha_dash|min:5|max:255',
+            'category_id' => 'required|integer',
             'body' => 'required'
         ));
 
@@ -45,6 +51,7 @@ class RapidController extends Controller
         $posts = new posts;
         $posts->title = $request->title;
         $posts->slug = $request->slug;
+        $posts->category_id = $request->category_id;
         $posts->body = $request->body;
 
         $posts->save();
@@ -69,7 +76,12 @@ class RapidController extends Controller
     public function edit(string $id)
     {
         $posts = posts::find($id);
-        return view('posts.edit')->with('posts', $posts);
+        $categories = Category::all();
+        $cats=[];
+        foreach ($categories as $Category) {
+            $cats[$Category->id] = $Category->name;
+        }
+        return view('posts.edit')->with('posts', $posts)->with('categories', $cats);
 
     }
 
@@ -82,6 +94,7 @@ class RapidController extends Controller
         $this->validate($request, array(
             'title' => 'required|max:225',
             'slug' => 'required|alpha_dash|min:5|max:255',
+            'category_id' => 'required|integer',
             'body' => 'required'
         ));
 
@@ -93,6 +106,7 @@ class RapidController extends Controller
         $posts = posts::find($id);
         $posts->title = $request->input('title');
         $posts->slug =$request->input('slug');
+        $posts->category_id =$request->input('category_id');
         $posts->body = $request->input('body');
 
         $posts->save();

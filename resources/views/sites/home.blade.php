@@ -15,7 +15,7 @@
         <div class="row">
             <div class="col-md-8">
 
-<h1>Shahriar</h1>
+
         @foreach ($postss as $posts)
 
 
@@ -23,7 +23,8 @@
             <div class="post">
                 <h1>{{$posts->title}}</h1>
                 <p>{{$posts->body}}</p>
-                <a href="#" class="btn btn-primary">Read more</a>
+                <a href="{{ url('blog/'.$posts->slug) }}" class="btn btn-primary">Read more</a>
+
             </div>
 
             <hr>

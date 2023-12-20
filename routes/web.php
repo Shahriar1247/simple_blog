@@ -3,6 +3,10 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\RapidController;
+use App\Http\Controllers\BlogController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\TagController;
+use App\Http\Controllers\CommentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,8 +34,9 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-Route::get('/', [PostController::class, 'home'])->name('index');
+//sites routes
 
+Route::get('/', [PostController::class, 'home'])->name('index');
 
 Route::get('/about', function() {
     return view('sites.about');
@@ -40,6 +45,21 @@ Route::get('/about', function() {
 Route::get('/contact', function() {
     return view('sites.contact');
 });
+Route::post('/contact', [PostController::class, 'contact'])->name('contact');
+
+//posts routes
 
 Route::resource('posts', RapidController::class);
 
+//blog routes
+Route::get('blog/{slug}', [BlogController::class, 'getSingle']);
+
+
+//categories routes
+Route::resource('categories', CategoryController::class)->except(['create']);
+
+//tags routes
+Route::resource('tags', TagController::class)->except(['create']);
+
+//Comments routes
+Route::post('comments/{posts_id}', [ CommentController::class, 'store'])->name('comments.store');

@@ -10,7 +10,11 @@
             <div>
                 <dl class="dl-horizontal">
                     <dt>URL:</dt>
-                    <dd><a href="{{url($posts->slug)}}">{{$posts->slug}}</a></dd>
+                    <dd><a href="{{ url('blog/'.$posts->slug) }}">{{ url($posts->slug) }}</a></dd>
+                </dl>
+                <dl class="dl-horizontal">
+                    <dt>Category:</dt>
+                    <p>{{$posts->Category->name}}</p>
                 </dl>
                 <dl class="dl-horizontal">
                     <dt>Created At:</dt>
