@@ -63,3 +63,7 @@ Route::resource('tags', TagController::class)->except(['create']);
 
 //Comments routes
 Route::post('comments/{posts_id}', [ CommentController::class, 'store'])->name('comments.store');
+Route::get('comments/{id}/edit', [CommentController::class, 'edit'])->name('comments.edit');
+Route::put('comments/{id}', [CommentController::class, 'update'])->name('comments.update');
+Route::delete('comments/{id}', [CommentController::class, 'destroy'])->name('comments.destroy');
+Route::get('comments/{id}/delete', [CommentController::class, 'delete'])->name('comments.delete');

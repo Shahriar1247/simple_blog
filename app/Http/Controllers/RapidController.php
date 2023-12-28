@@ -9,6 +9,8 @@ use App\Models\Category;
 use App\Models\Tag;
 
 
+
+
 class RapidController extends Controller
 {
     /**
@@ -53,6 +55,24 @@ class RapidController extends Controller
         $posts->slug = $request->slug;
         $posts->category_id = $request->category_id;
         $posts->body = $request->body;
+
+        //saving image
+        //if ($request->hasFile('featured_image')) {
+            //$image = $request->file('featured_image');
+            //$filename = time().'.'.$image->getClientOriginalExtension();
+            //$location = public_path('images/'.$filename);
+
+
+
+        //}
+
+        //$posts->image = $filename;
+
+        if ($request->image) {
+            $imageName= time().'.'.$request->image->extension();
+            $request->image->move(public_path('images'), $imageName);
+            $posts->image= "images/".$imageName;
+        }
 
         $posts->save();
 

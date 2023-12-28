@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Posts extends Model
 {
@@ -21,8 +22,8 @@ class Posts extends Model
         return $this->belongsToMany(Tag::class);
     }
 
-    public function comment(): HasMany
+    public function comments(): HasMany
     {
-        return $this->hasMany(comments::class);
+        return $this->hasMany(Comment::class);
     }
 }

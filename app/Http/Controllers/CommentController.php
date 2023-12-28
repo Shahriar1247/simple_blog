@@ -66,7 +66,13 @@ class CommentController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $comment = comment::find($id);
+        return view('comments.edit')->with('comment', $comment);
+
+        $comment->comment = $request->comment;
+        $comment->save();
+
+        return redirect()->route('posts.show', $comment->posts->id);
     }
 
     /**
@@ -74,7 +80,16 @@ class CommentController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $comment = comment::find($id);
+        $this->validate($request, array('comment' => 'required'));
+
+
+    }
+
+    public function delete($id)
+    {
+        $comment =comment::find($id);
+        return view('comments.delete',)->with('comment', $comment);
     }
 
     /**
@@ -82,6 +97,10 @@ class CommentController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $comment = comment::find($id);
+        $posts_id = $comment->posts->id;
+        $comment->delete();
+
+        return redirect()->route('posts.show', $posts_id);
     }
 }

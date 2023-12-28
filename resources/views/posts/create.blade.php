@@ -8,7 +8,7 @@
 @section('content')
     <div class="col-md-12">
         <h1 class="text-center">Create your post</h1>
-        {!! Form::open(['url' =>route('posts.store')]) !!}
+        {!! Form::open(['url' =>route('posts.store'), 'files' => 'true']) !!}
             {{ Form::label('title', 'Title:')}}
             {{ Form::text('title', null, array( 'class' => 'form-control')) }}
 
@@ -32,7 +32,8 @@
 
                 @endforeach
             </select>
-
+            {!! Form::label('featured_image', 'Upload photo:', ['class' => 'mt-3'] ) !!}
+            {!! Form::file('featured_image') !!} <br>
 
             {{ Form::label('body', 'Post Body:', ['class' => 'mt-2'])}}
             {{ Form::textarea('body', null, array( 'class' => 'form-control mt-2')) }}

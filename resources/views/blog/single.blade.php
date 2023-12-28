@@ -3,7 +3,7 @@
 
     <div class="row">
         <div class="col-md-8">
-
+            <img src="{{asset($posts->image)}}" alt="">
             <h1>{{$posts->title}}</h1>
             <p>{{$posts->body}}</p>
 
@@ -11,14 +11,18 @@
 
         </div>
 
+    </div><br>
+
+    <div class="comment">
+        <h3>Comments:</h3><br>
     </div>
 
     <div class="row">
         <div class="col-md-8">
             @foreach ($posts->comments as $comment)
 
-
-                        {{$comment->comment}}
+                <h5>{{$comment->name}}</h5>
+                        {{$comment->comment}} <br>
 
             @endforeach
         </div>
