@@ -42,17 +42,16 @@ Route::get('/about', function() {
     return view('sites.about');
 });
 
-Route::get('/contact', function() {
-    return view('sites.contact');
-});
-Route::post('/contact', [PostController::class, 'contact'])->name('contact');
+Route::get('/contact', [PostController::class, 'contact'])->name('contact');
+
+Route::post('/contact', [PostController::class, 'postContact']);
 
 //posts routes
 
 Route::resource('posts', RapidController::class);
 
 //blog routes
-Route::get('blog/{slug}', [BlogController::class, 'getSingle']);
+Route::get('blog/{slug}', [BlogController::class, 'getSingle'])->name('blog.single');
 
 
 //categories routes

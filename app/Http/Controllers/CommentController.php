@@ -49,8 +49,8 @@ class CommentController extends Controller
         $comment->save();
 
         //redirecting
-        return redirect()->route('blog/', [$posts->slug]);
-
+        //return redirect()->route('blog.single', [$posts->slug]);
+        return redirect()->back();
     }
 
     /**
@@ -69,10 +69,7 @@ class CommentController extends Controller
         $comment = comment::find($id);
         return view('comments.edit')->with('comment', $comment);
 
-        $comment->comment = $request->comment;
-        $comment->save();
 
-        return redirect()->route('posts.show', $comment->posts->id);
     }
 
     /**
@@ -80,9 +77,14 @@ class CommentController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        //dd($request->all());
         $comment = comment::find($id);
         $this->validate($request, array('comment' => 'required'));
 
+        $comment->comment = $request->comment;
+        $comment->save();
+
+        return redirect()->route('posts.show', $comment->posts->id);
 
     }
 

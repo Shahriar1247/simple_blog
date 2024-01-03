@@ -30,19 +30,22 @@ class PostController extends Controller
         'adress' => 'required|max:225',
         'ask' => 'required|min:10'
     ]);
+    //dd($request->all());
+    $data = array(
+        'name' => $request->name,
+        'email' => $request->email,
+        'adress' => $request->adress,
+        'ask' => $request->ask
+    );
 
-    $data = [
-        'name' => 'John Doe',
-        'message' => 'This is my message',
-    ];
+    Mail::send('emails.contact', $data, function ($message) use($data) {
+        $message->from($data['email']);
 
-    $mail = new Mail();
-    Mail::to('recipient@example.com')
-        ->subject('My Subject')
-        ->from('sender@example.com')
-        ->send(new MyMail($data, $mail));
+        $message->to('hello@example.com');
 
-    return 'Email sent successfully!';
+    });
+
+    return redirect()->route('sites.contact');
 
    }
 

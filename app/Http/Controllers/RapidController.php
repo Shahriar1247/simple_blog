@@ -7,12 +7,18 @@ use Illuminate\View\View;
 use App\Models\Posts;
 use App\Models\Category;
 use App\Models\Tag;
+use Illuminate\Support\Facades\Storage;
 
 
 
 
 class RapidController extends Controller
 {
+
+    //public function __construct(){
+
+        //$this->middleware('auth');
+    //}
     /**
      * Display a listing of the resource.
      */
@@ -44,7 +50,7 @@ class RapidController extends Controller
             'category_id' => 'required|integer',
             'body' => 'required'
         ));
-
+        //dd($request->all());
         //$validate = $request->validate([
             //'title' => 'required|max:225',
             //'body'=> 'required']);
@@ -57,20 +63,10 @@ class RapidController extends Controller
         $posts->body = $request->body;
 
         //saving image
-        //if ($request->hasFile('featured_image')) {
-            //$image = $request->file('featured_image');
-            //$filename = time().'.'.$image->getClientOriginalExtension();
-            //$location = public_path('images/'.$filename);
 
-
-
-        //}
-
-        //$posts->image = $filename;
-
-        if ($request->image) {
-            $imageName= time().'.'.$request->image->extension();
-            $request->image->move(public_path('images'), $imageName);
+        if ($request->featured_image) {
+            $imageName= time().'.'.$request->featured_image->extension();
+            $request->featured_image->move(public_path('images'), $imageName);
             $posts->image= "images/".$imageName;
         }
 
@@ -110,12 +106,14 @@ class RapidController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        //dd($request->all());
         // validate
         $this->validate($request, array(
             'title' => 'required|max:225',
             'slug' => 'required|alpha_dash|min:5|max:255',
             'category_id' => 'required|integer',
-            'body' => 'required'
+            'body' => 'required',
+            'featured_image' => 'image'
         ));
 
         //$validate = $request->validate([
@@ -129,7 +127,15 @@ class RapidController extends Controller
         $posts->category_id =$request->input('category_id');
         $posts->body = $request->input('body');
 
+        if ($request->featured_image) {
+            $imageName= time().'.'.$request->featured_image->extension();
+            $request->featured_image->move(public_path('images'), $imageName);
+            $posts->image= "images/".$imageName;
+        }
+
+
         $posts->save();
+
 
         //redirecting
 

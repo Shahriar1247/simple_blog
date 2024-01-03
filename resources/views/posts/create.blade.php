@@ -1,7 +1,7 @@
 @extends('main')
 @section('stylesheets')
 
-{!! Html::style('css/select2.min.css') !!}
+{!! Html::style('asset/select2/select2.min.css') !!}
 
 @endsection
 
@@ -25,10 +25,10 @@
             </select>
 
             {!! Form::label('tags', 'Tags:') !!}
-            <select name="tags" class="form-control mt-2" multiple="multiple">
+            <select name="tags[]"  data-placeholder="Choose tags ..." class="tags-select2 form-control" multiple="true">
                 @foreach ($tags as $Tag)
 
-                <option value="{{$Tag->id}}" selected="selected">{{$Tag->name}}</option>
+                <option value="{{$Tag->id}}">{{$Tag->name}}</option>
 
                 @endforeach
             </select>
@@ -45,12 +45,10 @@
 
 @section('scripts')
 
-{!!Html::script('js/select2.min.js')!!}
+<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+{!!Html::script('asset/select2/select2.min.js')!!}
 
-<script>
-    $(".js-example-tokenizer").select2({
-        tags: true,
-        tokenSeparators: [',', ' ']
-    })
-    </script>
+<script type="text/javascript">
+$(".tags-select2").select2();
+</script>
 @endsection

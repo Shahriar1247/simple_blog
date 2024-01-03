@@ -1,7 +1,18 @@
 @extends('main')
 @section('content')
-    <div class="row">
-    {!! Form::model($posts, [ 'route' => ['posts.update', $posts->id] ,'method' =>'PUT']) !!}
+
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+<div class="row">
+    {!! Form::model($posts, [ 'route' => ['posts.update', $posts->id] ,'method' =>'PUT', 'files' => true]) !!}
         <div class="col-md-8">
 
         {!! Form::label('title', 'Title:') !!}
@@ -13,7 +24,10 @@
         {!! Form::label('category_id', 'Category:', ['class' => 'form-spacing'])!!}
         {!! Form::select('category_id', $categories, null, ['class' => 'form-control']) !!}
 
-        {!! Form::label('body', 'Post Body:') !!}
+        {!! Form::label('featured_image', 'Update photo:', ['class' => 'mt-3'] ) !!} <br>
+        {!! Form::file('featured_image') !!} <br>
+
+        {!! Form::label('body', 'Post Body:', ['class' => 'mt-3']) !!}
         {!! Form::textarea('body', null, ['class' => 'form-control']) !!}
 
         </div>
@@ -30,12 +44,17 @@
                 <hr>
                 <div class="row">
                     <div class="col-sm-6 d-grid gap-2">
-                        <a href="{{route('posts.show', $posts->id)}}" class="btn btn-primary btn-block">Cancel</a>
+                        <a href="{{route('posts.show', $posts->id)}}" class="btn btn-primary btn-block mt-2">Cancel</a>
                     </div>
                     <div class="col-sm-6 d-grid gap-2">
-                        <a href="{{route('posts.update', $posts->id)}}" class="btn btn-danger btn-block">Update</a>
+                        {!! Form::submit('Update', ['class' => 'btn btn-success btn-block mt-2']) !!}
                     </div>
                 </div>
+                <div class="row">
+
+
+                </div>
+
             </div>
         </div>
     {!! Form::close() !!}
