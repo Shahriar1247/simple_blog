@@ -5,7 +5,7 @@
         <div class="col-md-8">
             <img src="{{asset($posts->image)}}" alt="">
             <h1>{{$posts->title}}</h1>
-            <p>{{$posts->body}}</p>
+            <p>{!! $posts->body !!}</p>
 
 
 

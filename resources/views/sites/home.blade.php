@@ -22,7 +22,7 @@
 
             <div class="post">
                 <h1>{{$posts->title}}</h1>
-                <p>{{$posts->body}}</p>
+                <p>{{substr(strip_tags($posts->body),0,300)}} {{strlen(strip_tags($posts->body))> 300 ? "...":""}}</p>
                 <a href="{{ url('blog/'.$posts->slug) }}" class="btn btn-primary">Read more</a>
 
             </div>

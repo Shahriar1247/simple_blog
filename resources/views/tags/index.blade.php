@@ -11,6 +11,7 @@
             <tr>
                 <th>ID</th>
                 <th>Name</th>
+                <th>Action</th>
             </tr>
             <tr>
 
@@ -18,6 +19,7 @@
 
                 <td>{{$Tag->id}}</td>
                 <td>{{$Tag->name}}</td>
+                <td><a href="{{route('tags.show', $Tag->id)}}" class="btn btn-sml">View</a></td>
 
 
             </tr>

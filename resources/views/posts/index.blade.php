@@ -27,7 +27,7 @@
         <tr>
             <td>{{ $posts->id }}</td>
             <td>{{ $posts->title }}</td>
-            <td>{{ substr("$posts->body", 0, 45) }} {{ strlen($posts->body) > 50 ? "..." : ""}}</td>
+            <td>{{ substr(strip_tags($posts->body), 0, 45) }} {{ strlen(strip_tags($posts->body)) > 50 ? "..." : ""}}</td>
             <td>{{ date('j F, Y ; G:i',strtotime($posts->created_at)) }}</td>
             <td>
                 <a href="{{route('posts.edit', $posts->id)}}" class="btn btn-primary">Edit</a>

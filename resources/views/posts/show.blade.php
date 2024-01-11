@@ -4,7 +4,15 @@
     <div class="row">
         <div class="col-md-8">
             <h2 style="margin-top: 15px">{{$posts->title}}</h2>
-            <p style="margin-top: 20px">{{$posts->body}}</p>
+            <p style="margin-top: 20px">{!! $posts->body !!}</p>
+
+            <hr>
+
+            <div class="tags">
+                @foreach ($posts->tags as $tag)
+                    <span class="badge bg-primary text-wrap">{{$tag->name}}</span>
+                @endforeach
+            </div>
 
 
             <div class="backend_comments" style="margin-top:30px">

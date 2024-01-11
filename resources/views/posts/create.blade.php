@@ -2,10 +2,29 @@
 @section('stylesheets')
 
 {!! Html::style('asset/select2/select2.min.css') !!}
+<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+      tinymce.init({
+        selector: '#mytextarea',
+        plugins: 'link code',
+        //toolbar: 'link',
+
+      });
+    </script>
 
 @endsection
 
 @section('content')
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
     <div class="col-md-12">
         <h1 class="text-center">Create your post</h1>
         {!! Form::open(['url' =>route('posts.store'), 'files' => 'true']) !!}
@@ -36,7 +55,7 @@
             {!! Form::file('featured_image') !!} <br>
 
             {{ Form::label('body', 'Post Body:', ['class' => 'mt-2'])}}
-            {{ Form::textarea('body', null, array( 'class' => 'form-control mt-2')) }}
+            {{ Form::textarea('body', null, array( 'class' => 'form-control mt-4', 'id' => 'mytextarea')) }}
 
             {{ Form::submit('Submit post', ['class' => 'form-control btn btn-success btn-block mt-2'])}}
         {!! Form::close() !!}

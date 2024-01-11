@@ -48,6 +48,7 @@ class RapidController extends Controller
             'title' => 'required|max:225',
             'slug' => 'required|alpha_dash|min:5|max:255',
             'category_id' => 'required|integer',
+            //'tag_id' => 'required|integer',
             'body' => 'required'
         ));
         //dd($request->all());
@@ -60,6 +61,7 @@ class RapidController extends Controller
         $posts->title = $request->title;
         $posts->slug = $request->slug;
         $posts->category_id = $request->category_id;
+
         $posts->body = $request->body;
 
         //saving image
@@ -71,6 +73,8 @@ class RapidController extends Controller
         }
 
         $posts->save();
+
+        $posts->tags()->sync($request->tags, false);
 
         //redirecting
 
@@ -97,7 +101,14 @@ class RapidController extends Controller
         foreach ($categories as $Category) {
             $cats[$Category->id] = $Category->name;
         }
-        return view('posts.edit')->with('posts', $posts)->with('categories', $cats);
+
+        $tags = Tag::all();
+        $tag2=array();
+        foreach($tags as $tag){
+            $tag2[$tag->id] = $tag->name;
+        }
+
+        return view('posts.edit')->with('posts', $posts)->with('categories', $cats)->with('tags', $tags);
 
     }
 
@@ -133,6 +144,13 @@ class RapidController extends Controller
             $posts->image= "images/".$imageName;
         }
 
+        if ($request->tags) {
+            $posts->tags()->sync($request->tags);
+        }
+        else {
+            $posts->tags()->sync(array());
+        }
+
 
         $posts->save();
 
@@ -149,8 +167,10 @@ class RapidController extends Controller
     public function destroy(string $id)
     {
         $posts = posts::find($id);
+        $posts->tags()->detach();
 
         $posts->delete();
+
 
         return redirect()->route('posts.index');
     }
