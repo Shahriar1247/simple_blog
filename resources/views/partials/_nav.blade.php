@@ -17,5 +17,18 @@
           </li>
         </ul>
       </div>
+      <!-- Example single danger button -->
+<div class="btn-group">
+    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-right: 20px ">
+      Action
+    </button>
+    <div class="dropdown-menu">
+      <a class="dropdown-item acive" href="{{route('register')}}">Sign Up</a>
+      <a class="dropdown-item" href="{{route('login')}}">Log In</a>
+      <a class="dropdown-item" href="{{route('posts.index')}}">Posts</a>
+      <div class="dropdown-divider"></div>
+      <a class="dropdown-item" href="{{route('tags.index')}}">Tags</a>
+    </div>
+  </div>
     </div>
 </nav>
